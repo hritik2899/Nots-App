@@ -1,0 +1,45 @@
+.notediv {
+  border: 1px solid grey;
+  margin: 1em;
+  width: 24em;
+  max-height: 15em;
+  overflow-y: scroll;
+  border-radius: 8px;
+}
+
+.notediv:hover{
+    box-shadow: 0 0 0 2px rgb(0 0 0 / 20%);
+    transition: all 200ms ease-out;
+}
+
+.titlediv {
+  border-bottom: 1px solid grey;
+  border-width: 90%;
+}
+
+.customalert {
+  margin-top: 0.2em;
+  padding-top: 0.6em;
+  padding-bottom: 0.6em;
+}
+
+
+#notebtn {
+  width: max-content;
+  padding: 0.2em 0.6em;
+  margin-bottom: 0.2em;
+}
+
+.middiv {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center !important;
+}
+
+textarea {
+  resize: none;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
