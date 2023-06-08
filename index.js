@@ -172,31 +172,42 @@ function App() {
     setIsDarkMode(!isDarkMode);
   };
 
+  import React, { useState } from 'react';
+import './App.scss';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { Navbar, Image, Table } from 'react-bootstrap';
+
+// Your React component code
+function App() {
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  const toggleMode = () => {
+    setIsDarkMode(!isDarkMode);
+  };
+
   return (
     <div className={`app ${isDarkMode ? 'dark' : 'light'}`}>
-      <Navbar bg={isDarkMode ? 'dark' : 'light'} variant={isDarkMode ? 'dark' : 'light'} expand="lg">
-        <Navbar.Brand style={{ fontSize: '24px', paddingRight: '20px' }}>
+      <Navbar bg="lightblue" variant="light" expand="lg" className="custom-navbar">
+        <Navbar.Brand style={{ fontSize: '28px', paddingLeft: '20px', paddingTop: '5px' }}>
           <Image src="logo.png" alt="Logo" className="mr-2" />
           My Website
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="navbar-nav" />
         <Navbar.Collapse id="navbar-nav">
-          <Nav className="ml-auto">
-            <div className="d-flex align-items-center">
-              <Image
-                src="user.png"
-                alt="User"
-                roundedCircle
-                className="mr-2"
-                style={{ width: '48px', height: '48px' }}
-              />
-              <span style={{ color: isDarkMode ? 'white' : 'black' }}>John Doe</span>
-            </div>
-          </Nav>
+          <div className="d-flex align-items-center ml-auto">
+            <Image
+              src="user.png"
+              alt="User"
+              roundedCircle
+              className="mr-2 profile-image"
+              style={{ width: '60px', height: '60px' }}
+            />
+            <span className="username">John Doe</span>
+          </div>
         </Navbar.Collapse>
       </Navbar>
 
-      <Table striped bordered hover variant={isDarkMode ? 'dark' : 'light'} className="mt-4 custom-table">
+      <Table striped bordered hover variant={isDarkMode ? 'dark' : 'light'} className="custom-table mt-4">
         <thead>
           <tr>
             <th>#</th>
