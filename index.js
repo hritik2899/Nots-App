@@ -160,11 +160,21 @@ const port = process.env.PORT || 8080;
 app.listen(port, () => {
     console.log(`LISTENING ON PORT ${port}`);
 })
-import React from 'react';
+import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Navbar, Nav } from 'react-bootstrap';
+import { Navbar, Nav, Image, Table } from 'react-bootstrap';
 
-<Navbar bg="primary" variant="dark" expand="lg">
+// Your React component code
+function App() {
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  const toggleMode = () => {
+    setIsDarkMode(!isDarkMode);
+  };
+
+  return (
+    <div className={`app ${isDarkMode ? 'dark' : 'light'}`}>
+      <Navbar bg={isDarkMode ? 'dark' : 'light'} variant={isDarkMode ? 'dark' : 'light'} expand="lg">
         <Navbar.Brand style={{ fontSize: '24px', paddingRight: '20px' }}>
           <Image src="logo.png" alt="Logo" className="mr-2" />
           My Website
@@ -173,9 +183,56 @@ import { Navbar, Nav } from 'react-bootstrap';
         <Navbar.Collapse id="navbar-nav">
           <Nav className="ml-auto">
             <div className="d-flex align-items-center">
-              <Image src="user.png" alt="User" roundedCircle className="mr-2" style={{ width: '32px' }} />
-              <span style={{ color: 'white' }}>John Doe</span>
+              <Image
+                src="user.png"
+                alt="User"
+                roundedCircle
+                className="mr-2"
+                style={{ width: '48px', height: '48px' }}
+              />
+              <span style={{ color: isDarkMode ? 'white' : 'black' }}>John Doe</span>
             </div>
           </Nav>
         </Navbar.Collapse>
       </Navbar>
+
+      <Table striped bordered hover variant={isDarkMode ? 'dark' : 'light'} className="mt-4 custom-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Username</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>John</td>
+            <td>Doe</td>
+            <td>john.doe</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>Jane</td>
+            <td>Smith</td>
+            <td>jane.smith</td>
+          </tr>
+          {/* Add more table rows as needed */}
+        </tbody>
+      </Table>
+
+      {/* Your JSX/HTML content */}
+      <div className="toggle-container mt-4">
+        <span className="toggle-label">Toggle mode:</span>
+        <label className="switch">
+          <input type="checkbox" checked={isDarkMode} onChange={toggleMode} />
+          <span className="slider round"></span>
+        </label>
+      </div>
+    </div>
+  );
+}
+
+export default App;
+
