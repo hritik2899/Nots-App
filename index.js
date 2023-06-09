@@ -185,65 +185,54 @@ function App() {
     setIsDarkMode(!isDarkMode);
   };
 
-  return (
-    <div className={`app ${isDarkMode ? 'dark' : 'light'}`}>
-      <Navbar bg="lightblue" variant="light" expand="lg" className="custom-navbar">
-        <Navbar.Brand style={{ fontSize: '28px', paddingLeft: '20px', paddingTop: '5px' }}>
-          <Image src="logo.png" alt="Logo" className="mr-2" />
-          My Website
-        </Navbar.Brand>
-        <Navbar.Toggle aria-controls="navbar-nav" />
-        <Navbar.Collapse id="navbar-nav">
-          <div className="d-flex align-items-center ml-auto">
-            <Image
-              src="user.png"
-              alt="User"
-              roundedCircle
-              className="mr-2 profile-image"
-              style={{ width: '60px', height: '60px' }}
-            />
-            <span className="username">John Doe</span>
-          </div>
-        </Navbar.Collapse>
-      </Navbar>
+  import React, { useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faToggleOn, faToggleOff } from '@fortawesome/free-solid-svg-icons';
+import Navbar from 'react-bootstrap/Navbar';
+import Container from 'react-bootstrap/Container';
+import Form from 'react-bootstrap/Form';
+import FormControl from 'react-bootstrap/FormControl';
+import Image from 'react-bootstrap/Image';
+import './Navbar.scss';
 
-      <Table striped bordered hover variant={isDarkMode ? 'dark' : 'light'} className="custom-table mt-4">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Username</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>1</td>
-            <td>John</td>
-            <td>Doe</td>
-            <td>john.doe</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>Jane</td>
-            <td>Smith</td>
-            <td>jane.smith</td>
-          </tr>
-          {/* Add more table rows as needed */}
-        </tbody>
-      </Table>
-
-      {/* Your JSX/HTML content */}
-      <div className="toggle-container mt-4">
-        <span className="toggle-label">Toggle mode:</span>
-        <label className="switch">
-          <input type="checkbox" checked={isDarkMode} onChange={toggleMode} />
-          <span className="slider round"></span>
-        </label>
-      </div>
-    </div>
-  );
+interface NavbarProps {
+  darkMode: boolean;
+  toggleDarkMode: () => void;
 }
 
-export default App;
+const MyNavbar: React.FC<NavbarProps> = ({ darkMode, toggleDarkMode }) => {
+  const [username, setUsername] = useState('John Doe');
 
+  const handleUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setUsername(event.target.value);
+  };
+
+  return (
+    <Navbar bg={darkMode ? 'dark' : 'light'} variant={darkMode ? 'dark' : 'light'} expand="lg">
+      <Container>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Brand style={{ fontSize: '1.5rem' }}>My Website</Navbar.Brand>
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Form inline>
+            <Image
+              src="path-to-your-image"
+              alt="User Avatar"
+              style={{ width: '40px', height: '40px', marginRight: '8px' }}
+            />
+            <FormControl
+              type="text"
+              value={username}
+              onChange={handleUsernameChange}
+              className="mr-sm-2"
+            />
+          </Form>
+        </Navbar.Collapse>
+        <Navbar.Toggle onClick={toggleDarkMode}>
+          <FontAwesomeIcon icon={darkMode ? faToggleOn : faToggleOff} size="lg" />
+        </Navbar.Toggle>
+      </Container>
+    </Navbar>
+  );
+};
+
+export default MyNavbar;
