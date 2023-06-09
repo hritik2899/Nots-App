@@ -160,10 +160,69 @@ const port = process.env.PORT || 8080;
 app.listen(port, () => {
     console.log(`LISTENING ON PORT ${port}`);
 })
-import { Icon } from '@iconify/react';
-import toggleSwitchFilled from '@iconify/icons-carbon/toggle-switch-filled';
-import toggleSwitchOutline from '@iconify/icons-carbon/toggle-switch-outline
-<Icon
-            icon={darkMode ? toggleSwitchFilled : toggleSwitchOutline}
-            style={{ fontSize: '1.5rem' }}
-          />
+import React, { useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBars, faToggleOn, faToggleOff } from '@fortawesome/free-solid-svg-icons';
+import Navbar from 'react-bootstrap/Navbar';
+import Container from 'react-bootstrap/Container';
+import Form from 'react-bootstrap/Form';
+import FormControl from 'react-bootstrap/FormControl';
+import Image from 'react-bootstrap/Image';
+import './Navbar.scss';
+
+interface NavbarProps {
+  darkMode: boolean;
+  toggleDarkMode: () => void;
+}
+
+const MyNavbar: React.FC<NavbarProps> = ({ darkMode, toggleDarkMode }) => {
+  const [username, setUsername] = useState('John Doe');
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  const handleToggleClick = () => {
+    setIsExpanded(!isExpanded);
+  };
+
+  const handleUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setUsername(event.target.value);
+  };
+
+  return (
+    <Navbar
+      bg={darkMode ? 'dark' : 'light'}
+      variant={darkMode ? 'dark' : 'light'}
+      expand="lg"
+      expanded={isExpanded}
+    >
+      <Container>
+        <Navbar.Toggle
+          aria-controls="basic-navbar-nav"
+          onClick={handleToggleClick}
+        >
+          <FontAwesomeIcon icon={faBars} size="lg" />
+        </Navbar.Toggle>
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Navbar.Brand style={{ fontSize: '1.5rem' }}>My Website</Navbar.Brand>
+          <Form>
+            <Image
+              src="path-to-your-image"
+              alt="User Avatar"
+              style={{ width: '40px', height: '40px', marginRight: '8px' }}
+            />
+            <FormControl
+              type="text"
+              value={username}
+              onChange={handleUsernameChange}
+              className="mr-sm-2"
+            />
+          </Form>
+        </Navbar.Collapse>
+        <Navbar.Toggle onClick={toggleDarkMode}>
+          <FontAwesomeIcon icon={darkMode ? faToggleOn : faToggleOff} size="lg" />
+        </Navbar.Toggle>
+      </Container>
+    </Navbar>
+  );
+};
+
+export default MyNavbar;
