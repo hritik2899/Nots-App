@@ -187,4 +187,22 @@ public class MyController {
         }
     }
 }
+try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            JsonNode rootNode = objectMapper.readTree(json);
+            JsonNode bNode = rootNode.get("b");
+
+            if (bNode != null && bNode.isArray() && bNode.size() > 0) {
+                JsonNode firstBNode = bNode.get(0);
+                JsonNode cNode = firstBNode.get("c");
+
+                if (cNode != null) {
+                    String dValue = cNode.asText();
+                    return dValue;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
 
