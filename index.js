@@ -160,35 +160,7 @@ const port = process.env.PORT || 8080;
 app.listen(port, () => {
     console.log(`LISTENING ON PORT ${port}`);
 })
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.Arrays;
-import java.util.List;
-
-@RestController
-public class MyController {
-
-    @GetMapping("/retrieve-b")
-    public ResponseEntity<List<String>> retrieveB() {
-        String json = "{\"a\": \"1\", \"b\": [\"release\",\"12\",\"a1\",\"a2\",\"a34\",\"a3\"]}";
-
-        try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            MyData myData = objectMapper.readValue(json, MyData.class);
-            List<String> bList = myData.getB();
-            return new ResponseEntity<>(bList, HttpStatus.OK);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-}
-try {
-            ObjectMapper objectMapper = new ObjectMapper();
+ObjectMapper objectMapper = new ObjectMapper();
             JsonNode rootNode = objectMapper.readTree(json);
             JsonNode bNode = rootNode.get("b");
 
@@ -196,13 +168,13 @@ try {
                 JsonNode firstBNode = bNode.get(0);
                 JsonNode cNode = firstBNode.get("c");
 
-                if (cNode != null) {
-                    String dValue = cNode.asText();
-                    return dValue;
+                if (cNode != null && cNode.isObject()) {
+                    JsonNode eNode = cNode.get("e");
+
+                    if (eNode != null) {
+                        String dValue = eNode.asText();
+                        return dValue;
+                    }
                 }
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
 
