@@ -160,7 +160,20 @@ const port = process.env.PORT || 8080;
 app.listen(port, () => {
     console.log(`LISTENING ON PORT ${port}`);
 })
-ObjectMapper objectMapper = new ObjectMapper();
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class MyController {
+
+    @GetMapping("/fetch-d")
+    public String fetchD() {
+        String json = "{\"1\":\"1\",\"b\":[{\"c\":[{\"e\":\"d\"}]}]}";
+
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
             JsonNode rootNode = objectMapper.readTree(json);
             JsonNode bNode = rootNode.get("b");
 
@@ -168,8 +181,9 @@ ObjectMapper objectMapper = new ObjectMapper();
                 JsonNode firstBNode = bNode.get(0);
                 JsonNode cNode = firstBNode.get("c");
 
-                if (cNode != null && cNode.isObject()) {
-                    JsonNode eNode = cNode.get("e");
+                if (cNode != null && cNode.isArray() && cNode.size() > 0) {
+                    JsonNode firstCNode = cNode.get(0);
+                    JsonNode eNode = firstCNode.get("e");
 
                     if (eNode != null) {
                         String dValue = eNode.asText();
@@ -177,4 +191,10 @@ ObjectMapper objectMapper = new ObjectMapper();
                     }
                 }
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
+        return null; // Return null if "d" is not found or an error occurs
+    }
+}
