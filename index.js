@@ -198,3 +198,30 @@ public class MyController {
         return null; // Return null if "d" is not found or an error occurs
     }
 }
+// src/store/index.ts
+
+import { createStore } from 'redux';
+
+// Define the initial state
+const initialState = {
+  myVariable: 'initial value',
+};
+
+// Define the reducer function
+function reducer(state = initialState, action) {
+  switch (action.type) {
+    case 'UPDATE_VARIABLE':
+      return {
+        ...state,
+        myVariable: action.payload,
+      };
+    default:
+      return state;
+  }
+}
+
+// Create the Redux store
+const store = createStore(reducer);
+
+export default store;
+
