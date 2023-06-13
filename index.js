@@ -224,4 +224,4 @@ function reducer(state = initialState, action) {
 const store = createStore(reducer);
 
 export default store;
-
+npm install redux react-redux @types/react-redux
