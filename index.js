@@ -225,3 +225,11 @@ const store = createStore(reducer);
 
 export default store;
 npm install redux react-redux @types/react-redux
+
+{sample.map((innerArray, index) => (
+        <div key={index}>
+          {innerArray.map((item, innerIndex) => (
+            <p key={innerIndex}>{item}</p>
+          ))}
+        </div>
+      ))}
