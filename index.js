@@ -160,76 +160,85 @@ const port = process.env.PORT || 8080;
 app.listen(port, () => {
     console.log(`LISTENING ON PORT ${port}`);
 })
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+\
 
-@RestController
-public class MyController {
+const MyComponent = () => {
+  const [input1Value, setInput1Value] = useState('');
+  const [input2Value, setInput2Value] = useState('');
+  const [showTable, setShowTable] = useState(false);
 
-    @GetMapping("/fetch-d")
-    public String fetchD() {
-        String json = "{\"1\":\"1\",\"b\":[{\"c\":[{\"e\":\"d\"}]}]}";
+  const options1 = ['Option 1', 'Option 2', 'Option 3'];
+  const options2 = ['Option A', 'Option B', 'Option C'];
 
-        try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            JsonNode rootNode = objectMapper.readTree(json);
-            JsonNode bNode = rootNode.get("b");
+  const handleInput1Change = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setInput1Value(event.target.value);
+    setInput2Value('');
+    setShowTable(false);
+  };
 
-            if (bNode != null && bNode.isArray() && bNode.size() > 0) {
-                JsonNode firstBNode = bNode.get(0);
-                JsonNode cNode = firstBNode.get("c");
+  const handleInput2Change = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setInput2Value(event.target.value);
+    setShowTable(false);
+  };
 
-                if (cNode != null && cNode.isArray() && cNode.size() > 0) {
-                    JsonNode firstCNode = cNode.get(0);
-                    JsonNode eNode = firstCNode.get("e");
+  const handleButtonClick = () => {
+    setShowTable(true);
+  };
 
-                    if (eNode != null) {
-                        String dValue = eNode.asText();
-                        return dValue;
-                    }
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return null; // Return null if "d" is not found or an error occurs
-    }
-}
-// src/store/index.ts
-
-import { createStore } from 'redux';
-
-// Define the initial state
-const initialState = {
-  myVariable: 'initial value',
+  return (
+    <div>
+      <h1>My Component</h1>
+      <div>
+        <label>Input 1:</label>
+        <select value={input1Value} onChange={handleInput1Change}>
+          <option value="">Select an option</option>
+          {options1.map((option, index) => (
+            <option key={index} value={option}>
+              {option}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div>
+        <label>Input 2:</label>
+        <select
+          value={input2Value}
+          onChange={handleInput2Change}
+          disabled={!input1Value}
+        >
+          <option value="">Select an option</option>
+          {options2.map((option, index) => (
+            <option key={index} value={option}>
+              {option}
+            </option>
+          ))}
+        </select>
+      </div>
+      <button onClick={handleButtonClick} disabled={!input1Value || !input2Value}>
+        Show Table
+      </button>
+      {showTable && (
+        <table>
+          <thead>
+            <tr>
+              <th>{input1Value}</th>
+              <th>{input2Value}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Data 1</td>
+              <td>Data 2</td>
+            </tr>
+            <tr>
+              <td>Data 3</td>
+              <td>Data 4</td>
+            </tr>
+          </tbody>
+        </table>
+      )}
+    </div>
+  );
 };
 
-// Define the reducer function
-function reducer(state = initialState, action) {
-  switch (action.type) {
-    case 'UPDATE_VARIABLE':
-      return {
-        ...state,
-        myVariable: action.payload,
-      };
-    default:
-      return state;
-  }
-}
-
-// Create the Redux store
-const store = createStore(reducer);
-
-export default store;
-npm install redux react-redux @types/react-redux
-
-{sample.map((innerArray, index) => (
-        <div key={index}>
-          {innerArray.map((item, innerIndex) => (
-            <p key={innerIndex}>{item}</p>
-          ))}
-        </div>
-      ))}
+export default MyComponent;
