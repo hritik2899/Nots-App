@@ -242,3 +242,111 @@ const MyComponent = () => {
 };
 
 export default MyComponent;
+import React, { useState } from 'react';
+import { css } from '@emotion/react';
+import { ClipLoader } from 'react-spinners';
+
+const override = css`
+  display: block;
+  margin: 0 auto;
+  border-color: red;
+`;
+
+const MyComponent = () => {
+  const [input1Value, setInput1Value] = useState('');
+  const [input2Value, setInput2Value] = useState('');
+  const [showTable, setShowTable] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const options1 = ['Option 1', 'Option 2', 'Option 3'];
+  const options2 = ['Option A', 'Option B', 'Option C'];
+
+  const handleInput1Change = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setInput1Value(event.target.value);
+    setInput2Value('');
+    setShowTable(false);
+  };
+
+  const handleInput2Change = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setInput2Value(event.target.value);
+    setShowTable(false);
+  };
+
+  const handleContinueButtonClick = () => {
+    setIsLoading(true);
+
+    // Simulating a server request with a setTimeout
+    setTimeout(() => {
+      setIsLoading(false);
+      setShowTable(true);
+    }, 2000);
+  };
+
+  return (
+    <div>
+      <h1>My Component</h1>
+      <div>
+        <label>Input 1:</label>
+        <select value={input1Value} onChange={handleInput1Change}>
+          <option value="">Select an option</option>
+          {options1.map((option, index) => (
+            <option key={index} value={option}>
+              {option}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div>
+        <label>Input 2:</label>
+        <select
+          value={input2Value}
+          onChange={handleInput2Change}
+          disabled={!input1Value}
+        >
+          <option value="">Select an option</option>
+          {options2.map((option, index) => (
+            <option key={index} value={option}>
+              {option}
+            </option>
+          ))}
+        </select>
+      </div>
+      <button
+        onClick={handleContinueButtonClick}
+        disabled={!input1Value || !input2Value}
+      >
+        Continue
+      </button>
+      {isLoading && (
+        <div className="loading-icon">
+          <ClipLoader css={override} size={50} color={'#123abc'} loading={true} />
+        </div>
+      )}
+      {showTable && (
+        <table>
+          <thead>
+            <tr>
+              <th>{input1Value}</th>
+              <th>{input2Value}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Data 1</td>
+              <td>Data 2</td>
+            </tr>
+            <tr>
+              <td>Data 3</td>
+              <td>Data 4</td>
+            </tr>
+          </tbody>
+        </table>
+      )}
+    </div>
+  );
+};
+
+export default MyComponent;
+
+
+
