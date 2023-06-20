@@ -349,4 +349,5 @@ const MyComponent = () => {
 export default MyComponent;
 
 
+ALTER TABLE your_table ALTER COLUMN id TYPE UUID USING (gen_random_uuid());
 
