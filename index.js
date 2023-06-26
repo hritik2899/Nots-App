@@ -346,8 +346,7 @@ const MyComponent = () => {
   );
 };
 
-export default MyComponent;
-
+export default MyComponenA platform for seamless application deployment, allowing users to effortlessly move their applications from development to UAT or UAT to production. It provides features like generating release plans, tracking application actions, and enabling users to sign off on application releases.
 
 ALTER TABLE your_table ALTER COLUMN id TYPE UUID USING (gen_random_uuid());
 SELECT CONSTRAINT_NAME
