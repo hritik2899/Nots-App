@@ -352,3 +352,12 @@ ALTER TABLE your_table ALTER COLUMN id TYPE UUID USING (gen_random_uuid());
 SELECT CONSTRAINT_NAME
 FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS
 WHERE TABLE_NAME = 'mine' AND CONSTRAINT_TYPE = 'PRIMARY KEY';
+
+
+AutoScheduler: Implement an AutoScheduler module that automatically deletes release plans within a specified schedule period.
+
+Zapp Running Status: Develop a user interface to display the current running status of Zapp and allow users to modify it.
+
+Listed Jiras for Fixed Version: Create a feature to display a list of Jira issues associated with a specific fixed version.
+
+DORM Feature Restrictions: Restrict certain features of the DORM system to individuals related to the application, ensuring access control and security.
